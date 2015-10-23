@@ -2,3 +2,5 @@
 *.aux
 *.bib
 *.out
+.texpadtmp/
+.DS_Store/
