@@ -776,9 +776,9 @@ In order to have \textit{scale-ready} applications, Scale First proposes a set o
 \end{itemize}
 
 \subsection{Resizable deployment environments}
-Web APIs on \textit{Scale First} are intented to provide an elastic architecture. For this is required to have a suitable deployment environment which provides support for this elastic behavior because applications and its resources can change so the goal here is to be ready to handle this change as fast as possible, this will increase Web APIs availability and resilience. One popular alternative for providing a flexible environment for Web APIs is by the adoption of cloud\footnote{The most-used definition of cloud computing belongs to the US National Institute of Standards and Technology (NIST): \textit{``Cloud computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g. networks, servers, storage, applications and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction\cite{nist:cloud-definition}''}} technologies. Software and infrastructure are increasingly consumed from the clouds. This is a more flexible and much cheaper than deploying your own infrastructure, especially for smaller organizations.
+Web APIs on \textit{Scale First} are intended to provide an elastic architecture. This requires a suitable deployment environment that provides support for this elastic behavior, since applications and their resources can change, so the goal here is to be ready to handle this change as fast as possible. This will increase Web APIs' availability and resilience. One popular alternative for providing a flexible environment for Web APIs is the adoption of cloud\footnote{The most-used definition of cloud computing belongs to the US National Institute of Standards and Technology (NIST): \textit{``Cloud computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g. networks, servers, storage, applications and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction\cite{nist:cloud-definition}''}} technologies. Software and infrastructure are increasingly consumed from the cloud. This is more flexible and much cheaper than deploying your own infrastructure, especially for smaller organizations.
 
-Providers use three well know models: IaaS (infrastructure as a service), PaaS (platform as a service) and SaaS (software as a service). As a matter of example, in the case of IaaS, this model offers precise scalability. The cloud can outperform physical hardware's classic scale-up or scale-out strategies. To gain as much from this features, applications have to be architect with as much as decoupling as possible, using SOA and using queries between services.
+Providers use three well-known models: IaaS (infrastructure as a service), PaaS (platform as a service) and SaaS (software as a service). As an example, in the case of IaaS, the model offers precise scalability. The cloud can outperform the physical hardware's classic scale-up or scale-out strategies. To gain as much from these features, applications have to be architected with as much as decoupling as possible, using SOA and queries between services.
 
 \subsection{Technology agnostic design}
 The aim of technology agnostic design(TAD) is to separate design and architecture from the technology employed and the specific implementation. This separation decreases both cost and risk while increasing scalability and availability of the Web API.
@@ -908,25 +908,30 @@ High scalability has limitations. Redundancy and fault tolerance are primary des
 IT resource disruption has a huge negative impact on any business, this leads to design with outages and high availability in mind.
 
 \subsubsection{Performance}
-Is needed to consider technology limitations regarding performance. A usage burst can affect available resources, notably compute units and disks' input/output operations. Bottlenecks might arise owing to latency issues. 
+It is necessary to consider technology limitations regarding performance. A usage burst can affect available resources, notably compute units and disks' input/output operations. Bottlenecks might arise as a result of latency issues. 
 
 \subsubsection{Security}
 Enforce well-established security practices around the Web API: firewalls, minimal server services to reduce attack vectors, up-to-date operating systems, key-based authentication, and so on.
 
 \subsubsection{Monitoring}
-The ease of deployment new resources can make the number of servers grow exponentially. This raises new issues, and monitoring tools are vital to system management.
+The ease of deployment of new resources can make the number of servers grow exponentially. This raises new issues, and monitoring tools are vital to system management.
 
 
 \subsection{Web API Checklist on Scale First}
 
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 \begin{table}[h!]
-    \ra{1.0}
+    \ra{0.98}
     \centering
     \begin{tabular}{lc|c} 
-        \toprule[1.5pt]        & \multicolumn{2}{c}{\textbf{Implemented?}} \\        \textbf{Feature} & \textbf{Yes} & \textbf{No} \\ \hline
-        \emph{Infrastructure} & & \\        \hspace{0.2cm}Infrastructure is flexible?  & & \\
-        \emph{Application Domain} & & \\        \hspace{0.2cm}Domain is delimited &  & \\        \hspace{0.2cm}Display (Quey) model &  & \\
+        \toprule[1.5pt]
+        & \multicolumn{2}{c}{\textbf{Implemented?}} \\
+        \textbf{Feature} & \textbf{Yes} & \textbf{No} \\ \hline
+        \emph{Infrastructure} & & \\
+        \hspace{0.2cm}Infrastructure is flexible?  & & \\
+        \emph{Application Domain} & & \\
+        \hspace{0.2cm}Domain is delimited &  & \\
+        \hspace{0.2cm}Display (Quey) model &  & \\
         \hspace{0.2cm}Update (Command) model & & \\
         \emph{Test Strategy} & & \\
         \hspace{0.2cm}Unit Tests & & \\
@@ -941,7 +946,8 @@ The ease of deployment new resources can make the number of servers grow exponen
         \hspace{0.2cm}Performance & & \\
         \hspace{0.2cm}Security & & \\
         \hspace{0.2cm}Monitoring & &\\                 
-    \bottomrule[1.5pt]    \end{tabular}
+    \bottomrule[1.5pt]
+    \end{tabular}
     \caption{Web API Checklist on Scale First}\label{table:checklist}    
 \end{table}
 
@@ -957,38 +963,38 @@ The exploratory study of the impact of the \textit{Scale First} approach for Web
 
 
 \subsection{First part: Web APIs don't follow Scale First principles}
-This experiment involves the gathering of Web APIs projects where some of the \textit{Scale First} are not adopted. For starters classic monolithical (``three tier'') applications could be the target. These applications could be architected taking some of the exposed principles in mind but not all of them. 
+This experiment involves the gathering of Web API projects where some of the \textit{Scale First} principles are not adopted. For starters, classic monolithical (``three tier'') applications could be the target. These applications could be architected taking some, but not all, of the exposed principles into account. 
 
 \subsection{Second part: Development of a non-trivial Web API following Scale First principles}
-A Web API project following the \textit{Scale First} principles must be develop. Ideally this should be a project that will be used in a real-life scenario. It could mimic the size and complexity of one the applications gathered in the first part. Another interesting approach would be to perform a migration project of one of the applications in the first part to the \textit{Scale First} model.
+A Web API project following the \textit{Scale First} principles must be developed. Ideally this should be a project that will be used in a real-life scenario. It could mimic the size and complexity of one of the applications gathered in the first part. Another interesting approach would be to perform a migration project of one of the applications in the first part to the \textit{Scale First} model.
 
 \subsection{Third part: Evaluation}
-In this part of the experiment we need to create and perform tests in which both type of applications need to reach to change on some way. Some initial scenarios could involve:
+In this part of the experiment we need to create and perform tests in which both types of applications need to react to change in some way. Some initial scenarios could involve:
 
 \begin{itemize}
     \item
-    Scale the a new instance of the Web API to a new server.
+    Scale a new instance of the Web API to a new server.
     \item
-    Scale the a new instance of the Web API into a new cloud provider.
+    Scale a new instance of the Web API into a new cloud provider.
     \item
-    Once a new instance of the Web API is deployed, then terminates it.
+    Once a new instance of the Web API is deployed, terminate it.
     \item
-    Extract a portion of an existing Web API in an independent Web API.
+    Extract a portion of an existing Web API to an independent Web API.
     \item
     Add a new resource to the application (database, cache, third party solution)
 \end{itemize}
 
-The above list proposes some basic scenarios where scalability concerns is tested. Depending of the nature of the application and organization needs, these scenarios could be more and could include more complex specifications.
+The above list proposes some basic scenarios where scalability concerns are tested. Depending on the nature of the application and organization needs, these scenarios could be more and could include more complex specifications.
 
 \subsection{Fourth part: analysis and interpretation}
-Once we have selected a set Web APIs, is time to measure, analyse and interpret the data we got from the previous part. The goal here is to evaluate if the adoption of the \textit{Scale First} principles in the development of the Web API causes a beneficial impact in comparison with the Web APIs that don't follow this approach.
+Once we have selected a set of Web APIs, is time to measure, analyze and interpret the data we obtained from the previous part. The goal here is to evaluate whether the adoption of the \textit{Scale First} principles in the development of the Web API causes a beneficial impact in comparison to the Web APIs that don't follow this approach.
 
-Here, is very important to select the most relevant metrics and then ask questions about the impact of those metrics in the scale process of a Web API:
+Here, it is very important to select the most relevant metrics and then ask questions about the impact of those metrics in the scale process of a Web API:
 \begin{itemize}
     \item
-    How much time the scale process take?
+    How much time does the scale process take?
     \item
-    How many people was involved in the process?
+    How many people were involved in the process?
     \item
     What was the user feedback (if any)?
     \item
@@ -996,7 +1002,7 @@ Here, is very important to select the most relevant metrics and then ask questio
     \item
     Which cloud provider has better response time?
     \item
-    How was impacted memory consumption or disks' input/output operations? 
+    How were the memory consumption or disks' input/output operations impacted? 
 \end{itemize}
 
 
@@ -1107,9 +1113,9 @@ Here, is very important to select the most relevant metrics and then ask questio
 
 
 \section{Conclusion}
-In this paper a proposal of a development approach for Web APIs and an experimental setup was made. This proposal takes into consideration the constantly changing enviroment in which Web APIs live and then exposes a set of alternatives to make these kind of applications more adaptive. This is achieved by putting together patterns and practices that although they exists in software development they are not part of a single body of knowledge for the context of Web APIs.
+This paper proposes a development approach for Web APIs and creates an experimental setup. This proposal takes into consideration the constantly-changing environment in which Web APIs live, and then exposes a set of alternatives to make these kinds of applications more adaptive. This is achieved by putting together patterns and practices that already exist in software development, but are not part of a single body of knowledge for the context of Web APIs.
 
-Today Web APIs are everywhere, they act as backing services behind desktop, mobile and Web applications for that reason is that the development efforts for them are more important than ever.  \textit{Scale First}, is an attempt for addressing Web API software development from the scalability standpoint and, although we are just scratching the surface regarding the eventual benefits of this approach, we see a lot of potentiality on it in comparison with current and old methodologies and approaches of doing software for the Web.
+Today Web APIs are everywhere. They act as backing services behind desktop, mobile and Web applications, which is why these development efforts are more important than ever.  \textit{Scale First} is an attempt to address Web API software development from a scalability standpoint. And, although we are just scratching the surface regarding the eventual benefits of this approach, we see a lot of potential in it in comparison with current and old methodologies and approaches to create software for the Web.
 
 
 
@@ -1243,7 +1249,7 @@ L.~Richardson and M.~Amundsen, \emph{RESTful Web APIs}, 1st ~ed.\hskip 1em plus
 RightScale. \emph{RightScale 2015 State of the Cloud Report}. RightScale, Inc. 2005. Available at: \href{http://www.rightscale.com/lp/2015-state-of-the-cloud-report?campaign=701700000012UP6}{http://www.rightscale.com/lp/2015-state-of-the-cloud-report?campaign=701700000012UP6}
 
 \bibitem{soapatterns}
-A.~Rotem-Gal-Oz. \emph{SOA Patterns}. 1st. Manning Publications. 2012.
+A.~Rotem-Gal-Oz. \emph{SOA Patterns}. 1st ed. Manning Publications. 2012.
 
 \bibitem{isw:cloud}
 N.~Serrano, G. Gallardo and J.~Hernantes, \emph{Infrastructure as a Service and Cloud Technologies}, IEEE Software, vol. 32, no 2, 2015, pp. 30-36.
