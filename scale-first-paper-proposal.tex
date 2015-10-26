@@ -534,6 +534,7 @@ pdfkeywords={Computer Society, IEEEtran, journal, LaTeX, paper,
 \usepackage{graphicx}
 \usepackage{framed}
 \usepackage{hyperref}
+\usepackage{longtable, multirow, booktabs}
 \graphicspath{ {images/} }
 
 \hypersetup{
@@ -580,7 +581,7 @@ pdfkeywords={Computer Society, IEEEtran, journal, LaTeX, paper,
 
 %\author{Carlos Mart\'{i}n Flores Gonz\'{a}lez \\ Costa Rica Institute of Technology ~\IEEEmembership{Student ID: 2015183528}}% <-this % stops a space
 
-\author{\IEEEauthorblockN{Carlos Mart\'{i}n Flores Gonz\'{a}lez}\IEEEauthorblockA{School of Computer Engineering\\Costa Rica Institute of Technology\\Cartago, Costa Rica 2550--2254\\Email: \href{mailto:martin.flores@computer.org}{martin.flores@computer.org}\\
+\author{\IEEEauthorblockN{Carlos Martín Flores González} \IEEEauthorblockA{School of Computer Engineering\\Costa Rica Institute of Technology\\Cartago, Costa Rica 2550--2254\\Email: \href{mailto:martin.flores@computer.org}{martin.flores@computer.org}\\
 Student ID: 2015183528}}
 
 
@@ -669,8 +670,8 @@ Student ID: 2015183528}}
 \maketitle
 
 \begin{abstract}
-Most applications using the Web as a delivery mechanism have had to embrace practices in order to constantly adapt their software so they can ensure their applications will be up and running most of the time. This is not an easy task and it becomes harder when applications are not designed to accommodate this change upfront.
-Web Application Programming Interfaces (APIs) have become in a popular solution to deliver data and content through the Web and, since they are available through Internet, they are exposed to the same concerns about how to manage change, particularly, the way the application could scale and manage new resources. Scale First is attempt to describe an approach where scalability topics are placed in the first place when implementing a Web API. It proposes a set of architectural, design and coding principles that allow to address change more effectively. These principles can be used in conjunction with software development methodologies to model the strategy of the system in terms of scalability and evolution.
+Most applications using the Web as a delivery mechanism have had to embrace practices in order to constantly adapt their software to ensure their applications will be up and running most of the time. This is not an easy task, and it becomes harder when applications are not designed to accommodate this change upfront.
+Web Application Programming Interfaces (APIs) have become a popular solution to deliver data and content through the Web, and since they are available through the Internet, they are exposed to the same concerns on how to manage change, particularly the way the application can scale and manage new resources. Scale First is an attempt to describe an approach where scalability topics are placed first when implementing a Web API. It proposes a set of architectural, design and coding principles that allow addressing change more effectively. These principles can be used in conjunction with software development methodologies to model the system's strategy in terms of scalability and evolution.
 
 \end{abstract}
 
@@ -730,34 +731,34 @@ Web Application Programming Interfaces (APIs) have become in a popular solution 
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{I}{n} software development the usage of APIs is crucial to define protocols, operations and tools for building applications. Software developers access APIs as interfaces for code libraries to speed up development and/or take advantage of existing low level tasks. With the advent of the World Wide Web, the most successful distributed system, a new kind of API has emerged in order to provide services in applications through a set of Hypertext Transfer Protocol (HTTP) messages, the Web API. But, as with APIs, most of today's Web APIs have a big problem: once deployed, they can't change. In fact there are big-name APIs that stay static for years at a time, as the industry changes around them, because changing them would be too difficult\cite{RESTfulWebAPI:richardson}. The ability to adapt and evolve to new requirements it's crucial for a Web API to be successful under critical and high demanding scenarios, such as the ones that experience E-Commerce and data intensive applications.
+\IEEEPARstart{I}{n} software development, the use of APIs is crucial to define protocols, operations and tools for building applications. Software developers access APIs as interfaces for code libraries to speed up development and/or take advantage of existing low level tasks. With the advent of the World Wide Web, the most successful distributed system, a new kind of API has emerged in order to provide services in applications through a set of Hypertext Transfer Protocol (HTTP) messages, the Web API. But, as with APIs, most of today's Web APIs have a big problem: once deployed, they can't be changed. In fact, there are big-name APIs that stay static for years at a time, as the industry changes around them, because changing them would be too difficult\cite{RESTfulWebAPI:richardson}. A Web API's ability to adapt and evolve to new requirements is crucial to ensure its success under critical and high-demanding scenarios, such as the ones experienced by E-Commerce and data intensive applications.
 
  
-\epigraph{{\textit{``Most software systems are created with the implicit assumption that the entire system is under the control of one entity, or at least that all entities participating within a systemare acting towards a common goal and not at cross-purposes. Such an assumption cannotbe safely made when the system runs openly on the Internet.''}}}{\textit{--- ~Roy Fielding \\ Architectural Styles and the Design of Network-based Software Architectures}}
+\epigraph{{\textit{``Most software systems are created with the implicit assumption that the entire system is under the control of one entity, or at least that all entities participating within a system are acting towards a common goal and not at cross-purposes. Such an assumption cannot be safely made when the system runs openly on the Internet.''}}}{\textit{--- ~Roy Fielding \\ Architectural Styles and the Design of Network-based Software Architectures}}
 
-Although we know software can change, many Web APIs can't accommodate change easily because they were not designed and developed taking scalability in mind from the ground up. A scalable Web API is not only an application that has the ability to allocate new resources in order to support new demanding growth, but also able to decrease their resource consumption when demand is down. Scalability is one of the main concerns that organizations have to take in mind when implementing a software project, without it the ability to compete and bring services to a broader audience and even reputation is compromised.
+Although we know software can change, many Web APIs can't accommodate change easily because they were not designed and developed with scalability in mind from the ground up. A scalable Web API is an application that has the ability not only to allocate new resources in order to support new demanding growth, but also to decrease resource consumption when demand is down. Scalability is one of the main concerns that organizations have to keep in mind when implementing a software project. Without it, the ability to compete and bring services to a broader audience, and even reputation, are compromised.
 
 
-Software methodologies don't propose a specific set of actions to take into consideration in order to address scalability concerns. Some agile methodologies such as Scrum and Extreme Programming (XP) encourages software projects to hit production or production-like environments as soon as possible(one of these approaches is the ``Walking Skeleton'', described by Allistair Cockburn\cite{cockburn} were a tiny implementation of the system is suppoused to perform a small end-to-end function), the main goal on those is to get rapid feedback about the deployment process and minimize further risks. In this particular we can say these methodologies are more intended to model the domain of the application rather than to model application growth.
+Software methodologies don't propose a specific set of actions to consider in order to address scalability concerns. Some agile methodologies such as Scrum and Extreme Programming (XP) encourage software projects to hit production or production-like environments as soon as possible (one of these approaches is the ``Walking Skeleton'', described by Allistair Cockburn\cite{cockburn} were a tiny implementation of the system is supposed to perform a small end-to-end function.) Their main goal is to quickly get feedback about the deployment process and minimize further risks. In this aspect, we can say that these methodologies are intended to model the domain of the application rather than application growth.
 
-In the other hand, modern engineering practices such as Continuous Integration and Continuous Delivery gives us a reference about how applications, their changes in the codebase and their deployment should be managed. In both practices, automation emerges as one of the key aspects since they rely on software to run test $\to$ build $\to$ acceptance $\to$ deploy cycles\footnote{In Continuous Delivery this workflow is known as a deployment pipeline.}, this could allow not only faster response times during deployment but also better sense of quality\cite{humble}. In Continuous Delivery, deployment processes of applications might consider scalability concerns because the goal is to model a workflow where applications are always in a delivery-ready state and, in order to achieve it, software developers have to find the way to provide mechanisms where applications are available to be shipped to one or \textit{n} servers at any time(ideally).
-An important thing to note here is that these practices are agnostic to the application they serve. This makes sense at first glance but at the same time it could lead to scenarios where monolithic\footnote{The term monolith has been in use by the Unix community for some time. It appears in The \emph{Art of Unix Programming} to describe systems that get too big.} applications are trying to be deployed. Despite the success of monolithic applications, frustration increases especially when they are being deployed. Change cycles are tightly coupled, small changes requires the entire monolith to be rebuilt and deployed. Over time it is often hard to keep a good modular structure, making it harder to keep changes that ought to only affect one module within that module. Scaling requires scaling of the entire application rather than parts of it that require greater resource\cite{monolit:fowler}. An application could be delivered fast but its internals doesn't allow a better way to scale it unless you try to scale the whole application at the same time. This approach could be expensive in terms of both money and resource consumption. 
+On the other hand, modern engineering practices such as Continuous Integration and Continuous Delivery provide us with a reference on how to manage applications, their changes in the codebase and their deployment. In both practices, automation emerges as one of the key aspects since they rely on software to run test $\to$ build $\to$ acceptance $\to$ deploy cycles\footnote{In Continuous Delivery, this workflow is known as a deployment pipeline.}; this could allow not only faster response times during deployment but also a better sense of quality\cite{humble}. In Continuous Delivery, the deployment processes of applications might consider scalability concerns because the goal is to model a workflow where applications are always in a delivery-ready state and, in order to achieve it, software developers have to find a way to provide mechanisms where applications are available to be shipped to one or \textit{n} servers at any time (ideally.)
+An important thing to note here is that these practices are agnostic to the application they serve. This makes sense at first glance, but at the same time it could lead to scenarios where monolithic\footnote{The term monolith has been in use by the Unix community for some time. It appears in The \emph{Art of Unix Programming} to describe systems that get too big.} applications are trying to be deployed. Despite the success of monolithic applications, frustration increases especially when they are being deployed. Change cycles are tightly coupled, small changes require the entire monolith to be rebuilt and deployed. Over time it is often hard to keep a good modular structure, making it harder to keep changes that ought to only affect one module within that module. Scaling requires scaling of the entire application rather than parts of it that require greater resource\cite{monolit:fowler}. An application could be delivered fast, but its internals do not allow for a better way to scale it unless you try to scale the whole application at the same time. This approach could be expensive in terms of money as well as resource consumption. 
 
-From the deployment standpoint, according to recent trends, organizations are planning for hybrid cloud computing solutions, meaning that increasingly they are relying their application deployment to more than one cloud computing provider\cite{rightscale} making even more important to have applications with cloud-friendly architectures. Here again, the eventually adoption of a development strategy which is aware about these kind of deployment considerations could make application distribution easily and prevent further headaches.
+From the deployment standpoint, according to recent trends, organizations are planning for hybrid cloud computing solutions, meaning that they are increasingly relying their application deployment on more than one cloud computing provider\cite{rightscale}, making it even more important to have applications with cloud-friendly architectures. Here again, the eventual adoption of a development strategy that is aware of these kinds of deployment considerations could make application distribution easy and prevent further headaches.
  
 % \hfill August 3, 2015
 
 \section{Web APIs}
-Web APIs is a term that refers to functions/operations that can be programmatically invoked using Web protocols. The term is based on the concept of Service Oriented Architecture (SOA) which proposed an attempt to change how software functionality is exposed through well-defined interfaces that were formally registered and could be discovered on the fly.
+Web API is a term that refers to functions/operations that can be programmatically invoked using Web protocols. The term is based on the concept of Service Oriented Architecture (SOA) which proposed an attempt to change how software functionality is exposed through well-defined interfaces that were formally registered and could be discovered on the fly.
 
 As the SOA notions matured, especially in their web services style and XML format of data, SOA evolved into more Web-friendly technologies such as Representational State Transfer (REST) and JSON data format that greatly simplified the reusability of an enterprise's capabilities. We use a common term, Web APIs, to refer to them.
 
-The reason Web APIs are important even more today is that they allow organizations to make their business functionalities easily accessible  to  other  entities  (patterns,  customers)  and  thus  easily create new value-added services. Further, users have access to a computing  device  in  the  context  of  their  daily  lives  like  never before, i.e., mobiles.\cite{webapi:definition}
+The reason Web APIs are even more important today is that they allow organizations to make their business functionalities easily accessible  to  other  entities  (patterns,  customers)  and  thus  easily create new value-added services. Furthermore, users have more access than ever to a computing  device  in  the  context  of  their  daily  lives, i.e., mobiles.\cite{webapi:definition}
 
-\section{Scale First}
-Due the lack of a software methodology/approach able to embrace scalability concerns as a key role of the software development process of Web APIs from their initial designs, is that we introduce an approach where scalability becomes a feature of the application itself. By sticking to this approach, Web APIs will be able to evolve easier because growth aspects are attacked in the initial stages of the development process, making organizations and individuals even more aware about the entire ecosystem of the Web API.
+\section{Introducing Scale First}
+Due the lack of a software methodology/approach that is able to embrace scalability concerns as a key role of the software development process of Web APIs from their initial designs, we introduce an approach where scalability becomes a feature of the application itself. By sticking to this approach, Web APIs will be able to evolve more easily because growth aspects are attacked in the initial stages of the development process, making organizations and individuals even more aware of the entire Web API ecosystem.
 
-In order to have \textit{scale-ready} applications, Scale First proposes a set of principles for clean, well-structured and testable applications that will be able to evolve according their needs before a single line of code is written, here is where this approach differs from traditional methodologies because concepts such as software design and deployment are tightly coupled. 
+In order to have \textit{scale-ready} applications, Scale First proposes a set of principles for clean, well-structured and testable applications that will be able to evolve according their needs before a single line of code is written; here is where this approach differs from traditional methodologies, since concepts such as software design and deployment are tightly coupled. 
 
  
 \subsection{Principles in Scale First}
@@ -775,24 +776,28 @@ In order to have \textit{scale-ready} applications, Scale First proposes a set o
 \end{itemize}
 
 \subsection{Resizable deployment environments}
+Web APIs on \textit{Scale First} are intented to provide an elastic architecture. For this is required to have a suitable deployment environment which provides support for this elastic behavior because applications and its resources can change so the goal here is to be ready to handle this change as fast as possible, this will increase Web APIs availability and resilience. One popular alternative for providing a flexible environment for Web APIs is by the adoption of cloud\footnote{The most-used definition of cloud computing belongs to the US National Institute of Standards and Technology (NIST): \textit{``Cloud computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g. networks, servers, storage, applications and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction\cite{nist:cloud-definition}''}} technologies. Software and infrastructure are increasingly consumed from the clouds. This is a more flexible and much cheaper than deploying your own infrastructure, especially for smaller organizations.
+
+Providers use three well know models: IaaS (infrastructure as a service), PaaS (platform as a service) and SaaS (software as a service). As a matter of example, in the case of IaaS, this model offers precise scalability. The cloud can outperform physical hardware's classic scale-up or scale-out strategies. To gain as much from this features, applications have to be architect with as much as decoupling as possible, using SOA and using queries between services.
 
 \subsection{Technology agnostic design}
-The aim of technolody agnostic design(TAD) is to separate design and architecture from the technology employed and the specific implementation. This separation decreases both cost and risk while increasing scalability and availability of the Web API.
-With TAD both organizations and individuals are forced to create disciplines around scales that are not dependent upon any single provider or service. This discipline allows you to scale in multiple dimensions through multiple potential partners, the result of which is a more predictable scalable system independent of any single solution provider.
-A common misperception is that by implementing a certain solution --for instance a databse technology--, you are reliant upon that solution. Just because the project makes use of a trendy new database technology does not mean that the Web API is dependent upon it alone for scale. TAD impacts availability also. The most obvious is the way in which it supports the ability to switch providers of technology when one prover has significantly greater availability of quality than other providers.
+The aim of technology agnostic design(TAD) is to separate design and architecture from the technology employed and the specific implementation. This separation decreases both cost and risk while increasing scalability and availability of the Web API.
+With TAD, both organizations and individuals are forced to create disciplines around scales that are not dependent on any single provider or service. This discipline allows you to scale in multiple dimensions through multiple potential partners, the result of which is a more predictable scalable system independent of any single solution provider. One popular option 
 
-\subsubsection{TAD considerations for Web APIs} \cite{artofscalability} proposes three steps for TAD designs. These steps are suitable for Web API projects as well and they can act as an initial help guide.
+A common misperception is that by implementing a certain solution --for instance a database technology--, you are reliant on that solution. Just because the project makes use of a trendy new database technology does not mean that the Web API is dependent upon it alone for scale. TAD also impacts availability. The most obvious way is how it supports the ability to switch technology providers when one provider has significantly greater quality availability over another.
+
+\subsubsection{TAD considerations for Web APIs} \cite{artofscalability} proposes three steps for TAD designs. These steps are suitable for Web API projects as well, and can act as an initial help guide.
 
 \begin{enumerate}
     \item
     In the design itself, think in terms of boxes and wire diagrams rather than prose. Leave the detail of the boxes to the next step.
     \item
-    In defining boxes and flows, use generic terms. Aplication server, Web server, RDBMS\footnote{RDBMS stands for \textit{Relational Database Management Systems}}, and so on. Don't use vendor names.
+    In defining boxes and flows, use generic terms. Application server, Web server, RDBMS\footnote{RDBMS stands for \textit{Relational Database Management Systems}}, and so on. Don't use vendor names.
     \item
     Describe requirements in industry standards. Stay away from proprietary terms specific to a vendor.  
 \end{enumerate}
 
-If the design is being pulled toward a vendor in a description or design statement, an attempt to ``loose'' that statement needs to be done to make it agnostic.
+If the design is being pulled toward a vendor in a description or design statement, try to ``loose'' that statement in order to make it agnostic.
 
 
   
@@ -802,26 +807,26 @@ If the design is being pulled toward a vendor in a description or design stateme
 % Although there are plenty of options for development and infrastructure for any Web API in mind, architecture is a design and should not rely upon any given vendor for implementation. 
 
 \subsection{Modular, scalable application design}
-Much has been written and implemented in regards the benefits of modular and/or component-based architectures in software development. These principles and practices applies for the development of Web APIs too, but beyond this, the goal is to come up with an architecture that allows the Web API to become an autonomous component who communicate with a mechanism such as web service requests, or remote procedure calls. That is make the Web API a service\footnote{Or a \textit{microservice}, an architectural style to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API\cite{monolit:fowler}. }.
-From the scalability standpoint, the main reasons for using services as components are the following:
+Much has been written and implemented regarding the benefits of modular and/or component-based architectures in software development. These principles and practices apply to the development of Web APIs too, but beyond this, the goal is to come up with an architecture that allows the Web API to become an autonomous component that communicates with a mechanism such as web service requests, or remote procedure calls. That is, make the Web API a service\footnote{Or a \textit{microservice}, an architectural style to develop a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API\cite{monolit:fowler}. }.
+From a scalability standpoint, the main reasons for using services as components are:
 \begin{itemize}
     \item
-    Technology Heterogeneity: Web APIs can be developed using the best suitable tool or technology stack depending of their needs.
+    Technology Heterogeneity: Web APIs can be developed using the best suitable tool or technology stack depending on their needs.
     \item
     Only those services that need scaling will scale.
     \item
-    Services are independently deployable: a change that is made to a single service is deployed  independently without impacting any other system. This allows to get the code deployed faster. If a problem does occur, it can be isolated quickly to an individual service, making fast rollback easy to achieve.
+    Services are independently deployable: a change that is made to a single service is deployed  independently without impacting other systems. This allows for a faster deployment of the code. If a problem does occur, it can be isolated quickly to an individual service, making fast rollback easy to achieve.
     \item
-    Resilience: working as an isolated service if a Web API fails then that failure will not be propagated to other systems.
+    Resilience: working as an isolated service; if a Web API fails, that failure will not be propagated to other systems.
 \end{itemize}
 
-Notice the above are not the only characteristics of a service-oriented architecture, more of this is described in \cite{microservices} and \cite{monolit:fowler}. 
+Notice the above are not the only characteristics of a service-oriented architecture. More of this is described in \cite{microservices} and \cite{monolit:fowler}. 
 
 \subsubsection{Decompose application domain}
-Domain context of the Web API has to be clearly delimited. The aim here is not to motivate the creation of very specific applications doing only just one thing, that could lead to management issues and since we are addressing the Web API development from the scalability standpoint, we are more interested in the creation of applications which represents a functional unit, that way logic and features inside can be managed and shared easily.
+The domain context of the Web API must be clearly defined. The aim here is not to motivate the creation of very specific applications doing just one thing. This could lead to management issues, and since we are addressing the Web API development from a scalability standpoint, we are more interested in the creation of applications that represent a functional unit, so that logic and features inside can be managed and shared easily.
 
-The work on \cite{evans:ddd} provides a guide on how to create systems that model real-world domains. It introduces the concept of \textit{bounded context}: ``a specific responsibility enforced by explicit boundaries''. The idea is that any given domain consists of multiple bounded contexts, and residing within each are things that do not need to be communicated outside as well as things that are shared externally with other bounded contexts. Each bounded context has an explicit interface, where it decides what models to share with other contexts.
-To get information from a bounded context, or want to make requests of functionality within a bounded context, a communication with its explicit boundary using models is performed.
+The work on \cite{evans:ddd} provides a guide on how to create systems that model real-world domains. It introduces the concept of \textit{bounded context}: ``a specific responsibility enforced by explicit boundaries''. The idea is that any given domain consists of multiple bounded contexts, and residing within each are things that do not need to be communicated to the outside, as well as things that are shared externally with other bounded contexts. Each bounded context has an explicit interface, where it decides what models to share with other contexts.
+To get information from a bounded context, or if you want to make functionality requests within a bounded context, a communication with its explicit boundary using models is performed.
 
 \begin{figure}[h]
     \hspace{-0.5cm}
@@ -831,15 +836,14 @@ To get information from a bounded context, or want to make requests of functiona
 \end{figure}
 
 
-When developing a Web API, the domain could be separated in bounded contexts meaning that each context has the potential to become separate Web API. This separation process is crucial, because no matter if in the first stages of the Web API development bounded contexts are not meant to be separate APIs, but depending of application needs they can be extracted and implemented as a separate API. With bounded contexts in place, future scalability efforts could be performed faster so this is a very important activity to run when designing and develop applications that are meant to be subject of change. In the fictional application design on figure \ref{fig:bounded-context}, although a Web API could be developed using the entire domain as a reference, both Sales Context and Support Context are potential separate Web APIs. 
+When developing a Web API, the domain can be separated into bounded contexts, meaning that each context has the potential to become a separate Web API. It doesn’t matter that the bounded contexts are not meant to be separate APIs in the initial stages of the Web API development process, because they can be extracted and implemented as separate APIs depending on the application’s needs.  This is why this separation process is crucial. With bounded contexts in place, future scalability efforts can be performed faster. This is therefore a very important activity to run when designing and developing applications that are meant to be subject of change. In the fictional application design on figure \ref{fig:bounded-context}, although a Web API can be developed using the entire domain as a reference, both Sales Context and Support Context are potential separate Web APIs. 
 
 \subsubsection{Split conceptual model into separate models for update and display}
-Depending of the domain, some applications can be more intensive in reading(query) than in writing data and viceversa even so both responsabilities have to be identified and separated into models for update and display, ideally each model will hold a set of autonomous components(such as databases) so each model is not depending of the other. This separation allows applications to scale depending of the demand of each of its responsabilities, that way if in a Web API the most intensive part is related with the query of data sources for display purposes then this portion of the Web API can be isolated and segregated in another Web API whose only purpose will be to serve queries. Since queries are now being performed off of a separate data store than a master database,  and assuming that the data that's being served is not 100\% up to date, it can easily to add more instances of these stores without worrying that they don’t contain the exact same data. This gives cheap horizontal scaling for queries. Also, since your not doing nearly as much data transformation, the latency per query goes down as well. Simple code is fast code\cite{dahan:cqrs}.
+Depending on the domain, some applications can be more intensive in reading (query) than in writing data and vice versa.  Even so, both responsibilities have to be identified and separated into models for update and display. Ideally, each model will hold a set of autonomous components(such as databases) so each model is not depending on the other. This separation allows applications to scale based on the demand of each of its responsibilities; that way, if the most intensive part in a Web API is related to the query of data sources for display purposes, then this portion of the Web API can be isolated and segregated in another Web API whose only purpose will be to serve queries. Since queries are now being performed off of a separate data store from the master database, and assuming that the data that's being served is not 100\% up to date, one can easily add more instances of these stores without having to worry that they don’t contain the same exact data. This provides cheap horizontal scaling for queries. Also, since you are not doing nearly as much data transformation, the latency per query goes down as well. Simple code is fast code\cite{dahan:cqrs}.
 
-An often implemented solution to this is the three-tiered application in which there is a separate data, logic and presentation tier. Within this solution, the database in the data tier is often seen as one CRUD (Create, Read, Update and Delete data) data store in which all commands
-and queries are performed on the same database. This can lead to locking, performance and scalability problems, especially with larger commands or queries, since all things have to be taken care of sequentially. Distributing parts of the system in combination with selective locking of data provides a partial solution, but leads to a high probability of data inconsistency.
-An option is to split parts of the system that have an emphasis on consistency from parts that should have an emphasis on availability or partition tolerance. The Command Query Responsibility Separation (CQRS) is a pattern in which all logic of a software product is separated based on whether it changes the application state (commands) or only queries it (queries). This means executing commands is done by different components than the one responsibly for executing the querying tasks, all of which can be done distributed and in parallel.
-Besides helping to solve the scalability problem of multi-tiered software products by enabling architects to distribute tasks of the system among an unlimited amount number of systems, CQRS also helps to implement a higher level of variability in online software products. The high level of variability is caused by the fact the main pattern keeps commands strictly separated from queries and has a large collection of sub patterns using the distributed nature of the pattern to enable, among others, all sort of different tenant dependant configurations, work flows, and business rules\cite{cqrs:kabbedijk}.
+An often implemented solution to this is the three-tiered application, which has a separate data, logic and presentation tier. Within this solution, the database in the data tier is often seen as one CRUD (Create, Read, Update and Delete data) data store in which all commands and queries are performed on the same database. This can lead to locking, performance and scalability problems, especially with larger commands or queries, since all things have to be taken care of sequentially. Distributing parts of the system in combination with selective locking of data provides a partial solution, but leads to a high probability of data inconsistency.
+An option is to split parts of the system that have an emphasis on consistency from parts that should have an emphasis on availability or partition tolerance. The Command Query Responsibility Segregation (CQRS) is a pattern in which all logic in a software product is separated based on whether it changes the application state (commands) or only queries it (queries). This means that executing commands is done by components different from the one responsible for executing the querying tasks, all of which can be done distributed and in parallel.
+Besides helping to solve the scalability problem of multi-tiered software products by enabling architects to distribute tasks of the system among an unlimited number of systems, CQRS also helps to implement a higher level of variability in online software products. The high level of variability is caused by the fact that the main pattern keeps commands strictly separated from queries and has a large collection of sub patterns using the distributed nature of the pattern to enable, among others, all sorts of tenant-dependent configurations, work flows, and business rules\cite{cqrs:kabbedijk}.
 
 \begin{figure}[h]
     \centering
@@ -848,41 +852,98 @@ Besides helping to solve the scalability problem of multi-tiered software produc
     \label{fig:cqrs}
 \end{figure}
 
-With a CQRS approach like the one in figure \ref{fig:cqrs} could led a Web API to be separated in two subapplications, each application can growth independently so resources can be assigned depending of its demand. 
+With a CQRS approach like the one in figure \ref{fig:cqrs} one can lead a Web API to be separated in two subapplications, each application can grow independently so resources can be assigned depending on its demand. 
 
 \subsection{Testability and maintainability}
-A test strategy for a Web API that is intented to evolve quickly must provide the following:
+A test strategy for a Web API that is intended to evolve quickly must provide the following:
 \begin{enumerate}
     \item
-    Test must run fast
+    Tests must run fast
     \item
-    Test must cover as much of application
+    Tests must cover as much of the application as possible
     \item
-    Test must be automated
+    Tests must be automated
     \item
-    Must provide support to continuous integration
+    Continuous Integration
 \end{enumerate}
 
-In the above list, items 1, 2 and 3 are intented to describe how test should behave while item 4 is intented put a context about how tests should be executed. Although many kinds of testing exists\cite{humble}, testing for scaling fast and reliable must have the automated component. For Web APIs, unit, integration and acceptance tests are the preferable set of tests that should be included.
+In the above list, items 1, 2 and 3 are intended to describe how a test should behave while item 4 is intended to provide a context for how tests should be executed. Although many kinds of testing exist\cite{humble}, testing for fast and reliable scaling must have the automated component. For Web APIs, unit, integration and acceptance tests are the preferable set of tests to include.
 
-The idea behind item 4, continuous integration is that, if regular integration of your codebase is good, why not do it all the time? In the context of integration, ``all the time'' means every single time somebody adds any change into the system\cite{beck:ci}. The application of this concept in the Web API by the usage of continuous integration software\footnote{Jenkins, Bamboo, Cruise Control, SnapCI, TravisCI} in the development process, will allow to deliver software much faster, and with fewer bugs\footnote{Or with no bugs at all}. 
+The idea behind item 4, continuous integration, is that if regular integration of your codebase is good, why not do it all the time? In the context of integration, ``all the time'' means every single time somebody adds a change into the system\cite{beck:ci}. The application of this concept in the Web API by the usage of continuous integration software\footnote{Jenkins, Bamboo, Cruise Control, SnapCI, TravisCI} in the development process will allow delivering software much faster, and with fewer bugs\footnote{Or with no bugs at all}. 
 
 
-To increase the Web API autonomy and increase overall availability, is also needed to identify and repair problems, and then notify the appropriate system operator about the service's current status. Web API has to provide support for actively monitors its internal state, acts on potential trouble, tries to heal itself, and continuously publishes its status is required also. For this, \cite{soapatterns} proposes the implementation of a service watchdog\footnote{\textit{Watchdog} is a term borrowed from the embedded systems world. A watchdog is a hardware device that counts down to 0, at which point it takes action, such as resetting the device. To prevent this reset, the application has to ``kick the dog'' before the timer runs out. If the application doesn't reset the counter, it could mean that the application has stopped responding. A reset would fix that.}, a pattern where a service actively monitors its internal state, acts on potential trouble, tries to heal itself, and continously published its status. Web APIs on \textit{Scale First} must contain a component in charge of monitoring the API's state. This component publishes the API's state periodically, and also when something meaninful occurs.
+To increase the Web API autonomy and increase overall availability, it is also necessary to identify and repair problems, and then notify the appropriate system operator of the service's current status. A Web API must provide support to actively monitor its internal state, act on potential trouble, try to heal itself, and continuously publish its status. For this, \cite{soapatterns} proposes the implementation of a service watchdog\footnote{\textit{Watchdog} is a term borrowed from the embedded systems world. A watchdog is a hardware device that counts down to 0, at which point it takes action, such as resetting the device. To prevent this reset, the application has to ``kick the dog'' before the timer runs out. If the application doesn't reset the counter, it could mean that the application has stopped responding. A reset would fix that.}, a pattern where a service actively monitors its internal state, acts on potential trouble, tries to heal itself, and continuously publishes its status. Web APIs on \textit{Scale First} must contain a component in charge of monitoring the API's state. This component publishes the API's state periodically, and also when something meaningful occurs.
 
-%The Service Watchdog pattern (see figure 3.14) revolves around a single idea—you%can increase the service’s responsibility by combining two complementary concepts:%reporting and self-healing.
-%The first is the watchdog agent concept, where the service implements the Active%Service pattern (discussed in chapter 2) and contains a component in charge of monitoring%the service’s state. This component publishes the service’s state periodically,%and also when something meaningful occurs
+%The Service Watchdog pattern (see figure 3.14) revolves around a single idea—you%can increase the service’s responsibility by combining two complementary concepts:%reporting and self-healing.
+%The first is the watchdog agent concept, where the service implements the Active%Service pattern (discussed in chapter 2) and contains a component in charge of monitoring%the service’s state. This component publishes the service’s state periodically,%and also when something meaningful occurs
 
 
 
 \subsection{Automated deployment process}
-\textit{Scale First} relies in the concepts and principles behind Continuous Delivery\cite{humble} in order to define processes that will allow to have a Web API application in a delivery-ready state. To achieve this, continuous delivery introduces the concept of \textit{deployment pipeline} which is an automated manifestation of the process for getting software from version control into the users. Every change of the software goes through a complex process on its way to being released. That process involves building of the software, followed by the progress of these builds through multiple stages of testing and deployment. The deployment pipeline models this process, and its incarnation in a continuous integration and release management tool is what allows to see and control the progress of each change as it moves from version control through various set of tests and deployment to release to users. A figure representing a basic pipeline can be found in appendix \ref{sec:deployment-pipeline}.
+\textit{Scale First} relies on the concepts and principles behind Continuous Delivery\cite{humble} in order to define processes that will allow having a Web API application in a delivery-ready state. To achieve this, continuous delivery introduces the concept of \textit{deployment pipeline} which is an automated manifestation of the process for getting software from version control to the users. Every change in the software goes through a complex process on its way to being released. That process involves the building of the software, followed by the progress of these builds through multiple stages of testing and deployment. The deployment pipeline models this process, and its incarnation in a continuous integration and release management tool is what allows seeing and controlling the progress of each change as it moves from version control through various sets of tests and deployment to release to users. %A figure representing a basic pipeline can be found in appendix \ref{sec:deployment-pipeline}.
 
-An automated deployment process for a Web API in \textit{Scale First} must include tasks in which new resources are able to be both, allocated and deallocated according application demands. This ability of making applications and environments adjust to new conditions is what we refer as the \textit{scale-ready} attribute in this Web API development approach. 
+An automated deployment process for a Web API in \textit{Scale First} must include tasks in which new resources are able to be both, allocated and deallocated according to application demands. This ability to make applications and environments adjust to new conditions is what we refer to as the \textit{scale-ready} attribute in this Web API development approach. 
  
 
 \subsection{Define a scalability policy}
- 
+As with every new paradigm, it's important to design Web APIs taking into account best practices and policies that will act as a body of knowledge for the application.
+The definition of policies and practices on \textit{Scale First} must cover:
+\begin{itemize}
+    \item
+    Design for failure
+    \item
+    High availability
+    \item
+    Performance
+    \item
+    Security
+    \item
+    Monitoring
+\end{itemize}
+
+\subsubsection{Design for failure}
+High scalability has limitations. Redundancy and fault tolerance are primary design goals. Applications have  to be prepared for reboots and launches.
+
+\subsubsection{High availability}
+IT resource disruption has a huge negative impact on any business, this leads to design with outages and high availability in mind.
+
+\subsubsection{Performance}
+Is needed to consider technology limitations regarding performance. A usage burst can affect available resources, notably compute units and disks' input/output operations. Bottlenecks might arise owing to latency issues. 
+
+\subsubsection{Security}
+Enforce well-established security practices around the Web API: firewalls, minimal server services to reduce attack vectors, up-to-date operating systems, key-based authentication, and so on.
+
+\subsubsection{Monitoring}
+The ease of deployment new resources can make the number of servers grow exponentially. This raises new issues, and monitoring tools are vital to system management.
+
+
+\subsection{Web API Checklist on Scale First}
+
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\begin{table}[h!]
+    \ra{1.0}
+    \centering
+    \begin{tabular}{lc|c} 
+        \toprule[1.5pt]        & \multicolumn{2}{c}{\textbf{Implemented?}} \\        \textbf{Feature} & \textbf{Yes} & \textbf{No} \\ \hline
+        \emph{Infrastructure} & & \\        \hspace{0.2cm}Infrastructure is flexible?  & & \\
+        \emph{Application Domain} & & \\        \hspace{0.2cm}Domain is delimited &  & \\        \hspace{0.2cm}Display (Quey) model &  & \\
+        \hspace{0.2cm}Update (Command) model & & \\
+        \emph{Test Strategy} & & \\
+        \hspace{0.2cm}Unit Tests & & \\
+        \hspace{0.2cm}Integration Tests & & \\
+        \hspace{0.2cm}Acceptance Tests & & \\
+        \hspace{0.2cm}Continuous Integration software & &\\
+        Automated deployment & & \\
+        \hspace{0.2cm}Deployment pipeline is defined? & &\\ 
+        \emph{Policies} & & \\
+        \hspace{0.2cm}Failure& & \\
+        \hspace{0.2cm}High Availability & & \\
+        \hspace{0.2cm}Performance & & \\
+        \hspace{0.2cm}Security & & \\
+        \hspace{0.2cm}Monitoring & &\\                 
+    \bottomrule[1.5pt]    \end{tabular}
+    \caption{Web API Checklist on Scale First}\label{table:checklist}    
+\end{table}
 
 
 \ifCLASSOPTIONcompsoc
@@ -892,7 +953,53 @@ An automated deployment process for a Web API in \textit{Scale First} must inclu
 \label{sec:experimentals}
 \fi
 
-The exploratory study of the impact of the \textit{Scale First} approach for Web API development could be composed of four parts. In the first part we can collect a set of Web API projects in which one or more of the principles of the Scale First approach are not adopted. In the second part, the development of a non-trivial Web API that follows the Scale First approach is required, this allow us to identify the potential of Scale First. In the third part, we need to create and exercise scenarios where scalability is required on both types of applications: the ones that are not following Scale First and the one who does it. Lastly we measure and interpret the impact of Scale First by analyzing the response time involved to perform the scalability task and the assigned resources to it such as money, hardware and people. 
+The exploratory study of the impact of the \textit{Scale First} approach for Web API development could be composed of four parts. In the first part we can collect a set of Web API projects in which one or more of the principles of the Scale First approach have not been adopted. In the second part, the development of a non-trivial Web API that follows the \textit{Scale First} approach is required. This allow us to identify the potential of \textit{Scale First}. In the third part, we need to create and perform scenarios where scalability is required on both types of applications: those that follow \textit{Scale First} and those that don't. Lastly, we measure and interpret the impact of Scale First by analyzing the response time involved in performing the scalability task and the resources assigned to it, such as money, hardware and people.
+
+
+\subsection{First part: Web APIs don't follow Scale First principles}
+This experiment involves the gathering of Web APIs projects where some of the \textit{Scale First} are not adopted. For starters classic monolithical (``three tier'') applications could be the target. These applications could be architected taking some of the exposed principles in mind but not all of them. 
+
+\subsection{Second part: Development of a non-trivial Web API following Scale First principles}
+A Web API project following the \textit{Scale First} principles must be develop. Ideally this should be a project that will be used in a real-life scenario. It could mimic the size and complexity of one the applications gathered in the first part. Another interesting approach would be to perform a migration project of one of the applications in the first part to the \textit{Scale First} model.
+
+\subsection{Third part: Evaluation}
+In this part of the experiment we need to create and perform tests in which both type of applications need to reach to change on some way. Some initial scenarios could involve:
+
+\begin{itemize}
+    \item
+    Scale the a new instance of the Web API to a new server.
+    \item
+    Scale the a new instance of the Web API into a new cloud provider.
+    \item
+    Once a new instance of the Web API is deployed, then terminates it.
+    \item
+    Extract a portion of an existing Web API in an independent Web API.
+    \item
+    Add a new resource to the application (database, cache, third party solution)
+\end{itemize}
+
+The above list proposes some basic scenarios where scalability concerns is tested. Depending of the nature of the application and organization needs, these scenarios could be more and could include more complex specifications.
+
+\subsection{Fourth part: analysis and interpretation}
+Once we have selected a set Web APIs, is time to measure, analyse and interpret the data we got from the previous part. The goal here is to evaluate if the adoption of the \textit{Scale First} principles in the development of the Web API causes a beneficial impact in comparison with the Web APIs that don't follow this approach.
+
+Here, is very important to select the most relevant metrics and then ask questions about the impact of those metrics in the scale process of a Web API:
+\begin{itemize}
+    \item
+    How much time the scale process take?
+    \item
+    How many people was involved in the process?
+    \item
+    What was the user feedback (if any)?
+    \item
+    How much money is needed to scale the Web API resources?
+    \item
+    Which cloud provider has better response time?
+    \item
+    How was impacted memory consumption or disks' input/output operations? 
+\end{itemize}
+
+
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
@@ -999,9 +1106,10 @@ The exploratory study of the impact of the \textit{Scale First} approach for Web
 
 
 
-%\section{Conclusion}
-%The conclusion goes here.
+\section{Conclusion}
+In this paper a proposal of a development approach for Web APIs and an experimental setup was made. This proposal takes into consideration the constantly changing enviroment in which Web APIs live and then exposes a set of alternatives to make these kind of applications more adaptive. This is achieved by putting together patterns and practices that although they exists in software development they are not part of a single body of knowledge for the context of Web APIs.
 
+Today Web APIs are everywhere, they act as backing services behind desktop, mobile and Web applications for that reason is that the development efforts for them are more important than ever.  \textit{Scale First}, is an attempt for addressing Web API software development from the scalability standpoint and, although we are just scratching the surface regarding the eventual benefits of this approach, we see a lot of potentiality on it in comparison with current and old methodologies and approaches of doing software for the Web.
 
 
 
@@ -1021,16 +1129,16 @@ The exploratory study of the impact of the \textit{Scale First} approach for Web
 %
 
 
-\appendices
-\section{A basic deployment pipeline}
-\label{sec:deployment-pipeline}
-
-\begin{figure*}[h]
-    \centering
-    \includegraphics[width=12cm]{deployment-pipeline}
-    \caption{A basic deployment pipeline}
-    \label{fig:deployment-pipeline}
-\end{figure*}
+%\appendices
+%\section{A basic deployment pipeline}
+%\label{sec:deployment-pipeline}
+%
+%\begin{figure*}[h]
+%    \centering
+%    \includegraphics[width=12cm]{deployment-pipeline}
+%    \caption{A basic deployment pipeline}
+%    \label{fig:deployment-pipeline}
+%\end{figure*}
 
 %Appendix one text goes here.
 
@@ -1121,6 +1229,9 @@ J.~Humble and D.~Farley, \emph{Continuous delivery : reliable software releases 
 \bibitem{cqrs:kabbedijk}
 J.~Kabbedijk and S.~Jansen and S.~Brinkkemper. \emph{A Case Study of the Variability Consequences of the CQRS Pattern in Online Business Software}. Proceedings of the 17th European Conference on Pattern Languages of Programs. 2012.
 
+\bibitem{nist:cloud-definition}
+P.~Mell and T.~Grance. \emph{The NIST Definition of Cloud Computing}. US Nat'l Institute of Standards and Technology. 2011.
+
 \bibitem{microservices}
 S.~Newman, \emph{Building Microservices}, 1st~ed. O'Reilly Media Inc, 2015
 
@@ -1141,7 +1252,7 @@ N.~Serrano, G. Gallardo and J.~Hernantes, \emph{Infrastructure as a Service and 
 T.~Schlossnagle, \emph{Scalable Internet Architectures}, O'Reilly Open Source Convention 2010. O'Reilly Media Inc, 2010.
 
 \bibitem{webapi:definition}
-B.~Srivastrava. \emph{Componsing Web APIs: State of the Art and Mobile Implications (Tutorial)}. Proceeding MOBILESoft 2014 Proceedings of the 1st International Conference on Mobile Software Engineering and Systems. 2014.
+B.~Srivastrava. \emph{Composing Web APIs: State of the Art and Mobile Implications (Tutorial)}. Proceeding MOBILESoft 2014 Proceedings of the 1st International Conference on Mobile Software Engineering and Systems. 2014.
 
 \bibitem{vernon:iddd}
 V.~Vernon. \emph{Implementing Domain Driven Design}. 1st ed. Addison-Wesley. July, 2013.
